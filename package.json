@@ -1,0 +1,18 @@
+{
+  "name": "commandblocks",
+  "version": "1.0.0",
+  "description": "Implements command blocks to MCPE",
+  "author": "imnofox <lachlan@imnofox.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "^0.11.1",
+    "grunt-cson": "^0.16.0",
+    "grunt-ftp-deploy": "^0.1.10",
+    "grunt-zip": "^0.17.1"
+  }
+}
