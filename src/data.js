@@ -24,12 +24,16 @@ Data.read = function(file) {
     if (!data.exists()) {
 		return {};
 	}
-    var fos = new java.io.FileInputStream(data);
-    var str = new java.lang.StringBuilder();
-    var ch;
-    while ((ch = fos.read()) != -1) str.append(java.lang.Character(ch));
-    var result = JSON.parse(String(str.toString()));
-    fos.close();
+	try {
+	    var fos = new java.io.FileInputStream(data);
+	    var str = new java.lang.StringBuilder();
+	    var ch;
+	    while ((ch = fos.read()) != -1) str.append(java.lang.Character(ch));
+	    var result = JSON.parse(String(str.toString()));
+	    fos.close();
+	} catch (err) {
+		result = {};
+	}
 	return result;
 }
 
