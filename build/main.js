@@ -174,7 +174,11 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
                 net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", [data.command.substring(1)]);
             }
         } else if (data.command.substring(0, 11).toLowerCase() == "javascript:") {
-            eval(data.command.substring(11));
+					try {
+						eval(data.command.substring(11));
+					} catch(err) {
+						print(err);
+					}
         } else if (data.command == "Searge") { // 1.9 easter egg
             commandBlocks[key].output = "#itzlipofutzli";
         }
