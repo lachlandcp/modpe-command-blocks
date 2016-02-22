@@ -11,6 +11,21 @@ globe.procCmd = procCmd;
 
 var config_filename = "commandBlocks";
 
+var searge_says = [
+    "Yolo",
+    "/achievement take achievement.understandCommands @p",
+    "Ask for help on twitter",
+    "/deop @p",
+    "Scoreboard deleted, commands blocked",
+    "Contact helpdesk for help",
+    "/testfornoob @p",
+    "/trigger warning",
+    "Oh my god, it's full of stats",
+    "/kill @p[name=!Searge]",
+    "Have you tried turning it off and on again?",
+    "Sorry, no help today"
+];
+
 var commandBlocks = {};
 var command_block_id = 137;
 
@@ -39,8 +54,9 @@ function useItem(x, y, z, itemId, blockId, side) {
                 y: y,
                 z: z,
                 command: "",
-                type: "command_block"
-            }
+                type: "command_block",
+                output: ""
+            };
         }
 
         preventDefault();
@@ -71,8 +87,10 @@ function useItem(x, y, z, itemId, blockId, side) {
         y: y,
         z: z,
         command: "",
-        type: "command_block"
-    }
+        type: "command_block",
+        output: ""
+    };
+    Data.save(config_filename, commandBlocks);
 
     Level.setTile(x, y, z, 137);
 }
@@ -93,11 +111,18 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
 
         var data = commandBlocks[key];
 
+		commandBlocks[key].output = "";
+
         if (data.command.substring(0, 1) == '/') {
-			//clientMessage(data.command);
-			net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", [data.command.substring(1)]);
+            if (data.command == '/help') {
+                commandBlocks[key].output = searge_says[Math.floor(Math.random() * searge_says.length)];
+            } else {
+                net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", [data.command.substring(1)]);
+            }
         } else if (data.command.substring(0, 11).toLowerCase() == "javascript:") {
             eval(data.command.substring(11));
+        } else if (data.command == "Searge") { // 1.9 easter egg
+            commandBlocks[key].output = "#itzlipofutzli";
         }
     }
 }
@@ -112,7 +137,7 @@ function editCommandBlock(x, y, z) {
                 var alert = new android.app.AlertDialog.Builder(ctx);
                 alert.setTitle("Command Block");
 
-                var scroll = new android.widget.ScrollView(ctx);
+                var scroll = new android.widget.HorizontalScrollView(ctx);
                 var layout = new android.widget.LinearLayout(ctx);
                 layout.setOrientation(1);
 
@@ -124,14 +149,20 @@ function editCommandBlock(x, y, z) {
 
                 layout.addView(setcmd, params);
 
+				var output_text = commandBlocks[key].output || "No output available.";
+
+				var output = new android.widget.TextView(ctx);
+				output.setText("Previous Output: " + output_text);
+				scroll.addView(output);
+				layout.addView(scroll, params);
+
+
                 alert.setView(layout);
 
                 alert.setPositiveButton("Ok", new android.content.DialogInterface.OnClickListener({
                     onClick: function(viewarg) {
-                        commandBlocks[key].command = '' + setcmd.getText().toString(); // '' needed to conver to JS string
-                        //print(commandBlocks[key].command);
-
-						Data.save(config_filename, commandBlocks);
+                        commandBlocks[key].command = '' + setcmd.getText().toString(); // empty string needed to convert to JS string
+                        Data.save(config_filename, commandBlocks);
                     }
                 }));
 
@@ -148,8 +179,9 @@ function editCommandBlock(x, y, z) {
     }));
 }
 
+// Useful for testing
 function procCmd(cmd) {
-	if (cmd.toLowerCase() == "commandblocks") {
-		ModPE.showTipMessage("Version:" + VERSION);
-	}
+    if (cmd.toLowerCase() == "commandblocks") {
+        ModPE.showTipMessage("Version: " + VERSION);
+    }
 }
