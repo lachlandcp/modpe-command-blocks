@@ -55,10 +55,13 @@ module.exports = global;
 var globe = require('./global.js');
 var Data = require('./data.js');
 
+var VERSION = "1.0.1";
+
 globe.newLevel = newLevel;
 globe.useItem = useItem;
 globe.redstoneUpdateHook = redstoneUpdateHook;
 globe.leaveGame = leaveGame;
+globe.procCmd = procCmd;
 
 var config_filename = "commandBlocks";
 
@@ -70,6 +73,7 @@ Block.defineBlock(command_block_id, "Command Block", [
 ], 7, true, 0);
 Block.setRedstoneConsumer(command_block_id, true);
 Player.addItemCreativeInv(command_block_id, 1, 0);
+Item.setCategory(command_block_id, ItemCategory.TOOL);
 
 function newLevel() {
     commandBlocks = Data.read(config_filename);
@@ -144,7 +148,8 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
         var data = commandBlocks[key];
 
         if (data.command.substring(0, 1) == '/') {
-            clientMessage(data.command);
+			//clientMessage(data.command);
+			net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", [data.command.substring(1)]);
         } else if (data.command.substring(0, 11).toLowerCase() == "javascript:") {
             eval(data.command.substring(11));
         }
@@ -178,7 +183,9 @@ function editCommandBlock(x, y, z) {
                 alert.setPositiveButton("Ok", new android.content.DialogInterface.OnClickListener({
                     onClick: function(viewarg) {
                         commandBlocks[key].command = '' + setcmd.getText().toString(); // '' needed to conver to JS string
-                        print(commandBlocks[key].command);
+                        //print(commandBlocks[key].command);
+
+						Data.save(config_filename, commandBlocks);
                     }
                 }));
 
@@ -195,19 +202,10 @@ function editCommandBlock(x, y, z) {
     }));
 }
 
-function toast(message) {
-	var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
-    ctx.runOnUiThread(new java.lang.Runnable({
-        run: function() {
-            try {
-                var Toast = android.app.widget.Toast;
-				var t = new Toast.makeText(ctx, message, Toast.LENGTH_LONG);
-				t.show();
-            } catch (err) {
-                print("An error occured: " + err);
-            }
-        }
-    }));
+function procCmd(cmd) {
+	if (cmd.toLowerCase() == "commandblocks") {
+		ModPE.showTipMessage("Version:" + VERSION);
+	}
 }
 
 },{"./data.js":1,"./global.js":2}]},{},[3]);

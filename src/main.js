@@ -1,10 +1,13 @@
 var globe = require('./global.js');
 var Data = require('./data.js');
 
+var VERSION = "1.0.1";
+
 globe.newLevel = newLevel;
 globe.useItem = useItem;
 globe.redstoneUpdateHook = redstoneUpdateHook;
 globe.leaveGame = leaveGame;
+globe.procCmd = procCmd;
 
 var config_filename = "commandBlocks";
 
@@ -91,7 +94,8 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
         var data = commandBlocks[key];
 
         if (data.command.substring(0, 1) == '/') {
-            net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", data.cmd);
+			//clientMessage(data.command);
+			net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", [data.command.substring(1)]);
         } else if (data.command.substring(0, 11).toLowerCase() == "javascript:") {
             eval(data.command.substring(11));
         }
@@ -125,7 +129,9 @@ function editCommandBlock(x, y, z) {
                 alert.setPositiveButton("Ok", new android.content.DialogInterface.OnClickListener({
                     onClick: function(viewarg) {
                         commandBlocks[key].command = '' + setcmd.getText().toString(); // '' needed to conver to JS string
-                        print(commandBlocks[key].command);
+                        //print(commandBlocks[key].command);
+
+						Data.save(config_filename, commandBlocks);
                     }
                 }));
 
@@ -140,4 +146,10 @@ function editCommandBlock(x, y, z) {
             }
         }
     }));
+}
+
+function procCmd(cmd) {
+	if (cmd.toLowerCase() == "commandblocks") {
+		ModPE.showTipMessage("Version:" + VERSION);
+	}
 }
