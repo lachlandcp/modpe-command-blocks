@@ -1,7 +1,7 @@
 var globe = require('./global.js');
 var Data = require('./data.js');
 
-var VERSION = "1.0.1";
+var VERSION = "1.0.2";
 
 globe.newLevel = newLevel;
 globe.useItem = useItem;
@@ -111,7 +111,7 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
 
         var data = commandBlocks[key];
 
-		commandBlocks[key].output = "";
+        commandBlocks[key].output = "";
 
         if (data.command.substring(0, 1) == '/') {
             if (data.command == '/help') {
@@ -120,11 +120,11 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
                 net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", [data.command.substring(1)]);
             }
         } else if (data.command.substring(0, 11).toLowerCase() == "javascript:") {
-					try {
-						eval(data.command.substring(11));
-					} catch(err) {
-						print(err);
-					}
+            try {
+                eval(data.command.substring(11));
+            } catch (err) {
+                print(err);
+            }
         } else if (data.command == "Searge") { // 1.9 easter egg
             commandBlocks[key].output = "#itzlipofutzli";
         }
@@ -148,17 +148,18 @@ function editCommandBlock(x, y, z) {
                 var setcmd = new android.widget.EditText(ctx);
                 setcmd.setHint("Insert command or javascript");
                 setcmd.setText(commandBlocks[key].command);
+								setcmd.setInputType(524288); // disable autocorrect
 
                 var params = new android.view.ViewGroup.LayoutParams(-1, -1);
 
                 layout.addView(setcmd, params);
 
-				var output_text = commandBlocks[key].output || "No output available.";
+                var output_text = commandBlocks[key].output || "No output available.";
 
-				var output = new android.widget.TextView(ctx);
-				output.setText("Previous Output: " + output_text);
-				scroll.addView(output);
-				layout.addView(scroll, params);
+                var output = new android.widget.TextView(ctx);
+                output.setText("Previous Output: " + output_text);
+                scroll.addView(output);
+                layout.addView(scroll, params);
 
 
                 alert.setView(layout);
