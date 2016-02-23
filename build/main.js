@@ -147,21 +147,24 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
 
     commandBlocks[key].output = "";
 
+    var match;
     if (data.command.substring(0, 1) == '/') {
       if (data.command == '/help') {
         commandBlocks[key].output = searge_says[Math.floor(Math.random() * searge_says.length)];
       } else {
         net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod("procCmd", [data.command.substring(1)]);
       }
-    } else if (data.command.substring(0, 11).toLowerCase() == "javascript:") {
+    } else if (match = data.command.match(/^(javascript:|js:)/ig)) {
       try {
-        eval(data.command.substring(11));
+        eval(data.command.substring(match[0].length));
       } catch (err) {
         print(err);
       }
     } else if (data.command == "Searge") {
       // 1.9 easter egg
       commandBlocks[key].output = "#itzlipofutzli";
+    } else {
+      commandBlocks[key].output = "No command or JS provided.";
     }
   }
 }
