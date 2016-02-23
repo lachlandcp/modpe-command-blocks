@@ -55,8 +55,6 @@ module.exports = global;
 var globe = require('./global.js');
 var Data = require('./data.js');
 
-var VERSION = "1.0.2";
-
 globe.newLevel = newLevel;
 globe.useItem = useItem;
 globe.redstoneUpdateHook = redstoneUpdateHook;
@@ -236,13 +234,6 @@ function editCommandBlock(x, y, z) {
             }
         }
     }));
-}
-
-// Useful for testing
-function procCmd(cmd) {
-    if (cmd.toLowerCase() == "commandblocks") {
-        ModPE.showTipMessage("Version: " + VERSION);
-    }
 }
 
 },{"./data.js":1,"./global.js":2}]},{},[3]);

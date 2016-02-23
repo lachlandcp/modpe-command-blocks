@@ -1,8 +1,6 @@
 var globe = require('./global.js');
 var Data = require('./data.js');
 
-var VERSION = "1.0.2";
-
 globe.newLevel = newLevel;
 globe.useItem = useItem;
 globe.redstoneUpdateHook = redstoneUpdateHook;
