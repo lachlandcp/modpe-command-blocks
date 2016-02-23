@@ -59,7 +59,6 @@ globe.newLevel = newLevel;
 globe.useItem = useItem;
 globe.redstoneUpdateHook = redstoneUpdateHook;
 globe.leaveGame = leaveGame;
-globe.procCmd = procCmd;
 
 var config_filename = "commandBlocks";
 
@@ -107,13 +106,14 @@ function useItem(x, y, z, itemId, blockId, side) {
                 z: z,
                 command: "",
                 type: "command_block",
-                output: ""
+                output: "",
+								toggle_mode: false
             };
         }
 
         preventDefault();
         editCommandBlock(x, y, z);
-
+				return;
     }
 
     if (itemId != command_block_id) {
@@ -140,7 +140,8 @@ function useItem(x, y, z, itemId, blockId, side) {
         z: z,
         command: "",
         type: "command_block",
-        output: ""
+        output: "",
+				toggle_mode: false
     };
     Data.save(config_filename, commandBlocks);
 
@@ -156,12 +157,14 @@ function destroyBlock(x, y, z) {
 }
 
 function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDamage) {
-    if (newCurrent <= 0 || worldLoading) return false;
+    if (worldLoading) return false;
     if (blockId == command_block_id) {
         var key = x + '/' + y + '/' + z;
         if (!((key) in commandBlocks)) return false;
 
         var data = commandBlocks[key];
+
+				if (newCurrent <= 0 && data.toggle_mode == false) return false;
 
         commandBlocks[key].output = "";
 
@@ -190,6 +193,9 @@ function editCommandBlock(x, y, z) {
             try {
                 var key = x + '/' + y + '/' + z;
 
+								var fill = new android.view.ViewGroup.LayoutParams(-1, -1);
+								var wrap = new android.view.ViewGroup.LayoutParams(-2, -2);
+
                 var alert = new android.app.AlertDialog.Builder(ctx);
                 alert.setTitle("Command Block");
 
@@ -202,23 +208,35 @@ function editCommandBlock(x, y, z) {
                 setcmd.setText(commandBlocks[key].command);
 								setcmd.setInputType(524288); // disable autocorrect
 
-                var params = new android.view.ViewGroup.LayoutParams(-1, -1);
+								if (!('toggle_mode' in commandBlocks[key])) commandBlocks[key].toggle_mode = false;
+								var togglemode = new android.widget.CheckBox(ctx);
+								togglemode.setChecked(commandBlocks[key].toggle_mode);
 
-                layout.addView(setcmd, params);
+								var togglemode_label = new android.widget.TextView(ctx);
+								togglemode_label.setText('Toggle mode? ');
+
+								var togglemode_layout = new android.widget.LinearLayout(ctx);
+								togglemode_layout.setOrientation(0);
+								togglemode_layout.addView(togglemode_label, wrap);
+								togglemode_layout.addView(togglemode, wrap);
+
+                layout.addView(setcmd, fill);
+								layout.addView(togglemode_layout, fill);
 
                 var output_text = commandBlocks[key].output || "No output available.";
 
                 var output = new android.widget.TextView(ctx);
                 output.setText("Previous Output: " + output_text);
-                scroll.addView(output);
-                layout.addView(scroll, params);
 
+                scroll.addView(output);
+                layout.addView(scroll, fill);
 
                 alert.setView(layout);
 
                 alert.setPositiveButton("Ok", new android.content.DialogInterface.OnClickListener({
                     onClick: function(viewarg) {
                         commandBlocks[key].command = '' + setcmd.getText().toString(); // empty string needed to convert to JS string
+												commandBlocks[key].toggle_mode = togglemode.isChecked();
                         Data.save(config_filename, commandBlocks);
                     }
                 }));
