@@ -1,6 +1,6 @@
 # Command Block Mod
 
-Download and install <a href="https://cdn.rawgit.com/imnofox/modpe-command-blocks/master/build/main.min.js" download>main.min.js</a> in BlockLauncher.
+Download and install [main.min.js](https://cdn.rawgit.com/imnofox/modpe-command-blocks/master/build/main.min.js) in BlockLauncher.
 
 You can enter commands, or Javascript to run by prepending "javascript:", ie `javascript: ModPE.showTipMessage("Wow");`
 
