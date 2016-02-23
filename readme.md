@@ -1,6 +1,6 @@
 # Command Block Mod
 
-Download and install [main.min.js](https://cdn.rawgit.com/imnofox/modpe-command-blocks/raw/master/build/main.min.js) in BlockLauncher.
+Download and install [main.min.js](https://cdn.rawgit.com/imnofox/modpe-command-blocks/master/build/main.min.js) in BlockLauncher.
 
 You can enter commands, or Javascript to run by prepending "javascript:", ie `javascript: ModPE.showTipMessage("Wow");`
 
@@ -18,16 +18,9 @@ Using Javascript is great, as you don't need to rely on having other mods instal
 javascript: var d = new Date(); ModPE.takeScreenshot(d.now());
 ```
 
-### Redstone setblock clock
-
-```
-javascript: Level.setTile(x, y + 1, z, 1); // put in bottom command block (1 = stone)
-javascript: Level.setTile(x, y - 1, z, 152); // put in top command block (152 = redstone block)
-```
-
 # Sharing
 
-Please use the (official link)(https://cdn.rawgit.com/imnofox/modpe-command-blocks/raw/master/build/main.min.js) when distributing.
+Please use the (official link)(https://cdn.rawgit.com/imnofox/modpe-command-blocks/master/build/main.min.js) when distributing.
 That way, the link will always be up to date with the latest version.
 
 It would also be great if you could link back to this github repo or the [MCPE Stuffs article](http://www.mcpestuffs.com/2016/02/command-blocks-mod/) :)
