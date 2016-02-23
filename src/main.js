@@ -45,7 +45,7 @@ function useItem(x, y, z, itemId, blockId, side) {
 
   var key = x + '/' + y + '/' + z;
   if (blockId == command_block_id) {
-    if (!(key in commandBlocks)) {
+    if (!(key in commandBlocks)) { // best register any cmd blocks somehow missed.
       commandBlocks[key] = {
         x: x,
         y: y,
