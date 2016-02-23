@@ -183,10 +183,3 @@ function editCommandBlock(x, y, z) {
         }
     }));
 }
-
-// Useful for testing
-function procCmd(cmd) {
-    if (cmd.toLowerCase() == "commandblocks") {
-        ModPE.showTipMessage("Version: " + VERSION);
-    }
-}

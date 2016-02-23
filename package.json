@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Implements command blocks to MCPE",
   "author": "imnofox <lachlan@imnofox.com>",
-  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
