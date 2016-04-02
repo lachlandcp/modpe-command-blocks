@@ -20,18 +20,18 @@ Data.read = function(file) {
   var path = new android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftworlds/" + Level.getWorldDir() + '/modData/commandBlocks/';
   var result;
   try {
-		file = file + '.json';
-	  java.io.File(new java.io.File(path)).mkdirs();
-	  var data = new java.io.File(path + file);
-	  if (!data.exists()) {
-	    return {};
-	  }
+    file = file + '.json';
+    java.io.File(new java.io.File(path)).mkdirs();
+    var data = new java.io.File(path + file);
+    if (!data.exists()) {
+      return {};
+    }
     var fos = new java.io.FileInputStream(data);
     var str = new java.lang.StringBuilder();
     var ch;
     while ((ch = fos.read()) != -1) {
-			str.append(java.lang.Character(ch));
-		}
+      str.append(java.lang.Character(ch));
+    }
     result = JSON.parse(String(str.toString()));
     fos.close();
   } catch (err) {
