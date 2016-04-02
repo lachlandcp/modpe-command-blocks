@@ -24,7 +24,7 @@ javascript: var d = new Date(); ModPE.takeScreenshot(d.now());
 
 # Sharing
 
-Please use the (official link)(https://raw.githubusercontent.com/imnofox/modpe-command-blocks/master/build/main.min.js) when distributing.
+Please use the [official link](https://raw.githubusercontent.com/imnofox/modpe-command-blocks/master/build/main.min.js) when distributing.
 That way, the link will always be up to date with the latest version.
 
 It would also be great if you could link back to this github repo or the [MCPE Stuffs article](http://www.mcpestuffs.com/2016/02/command-blocks-mod/) :)
