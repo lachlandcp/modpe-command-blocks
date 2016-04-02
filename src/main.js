@@ -114,7 +114,7 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
 
     commandBlocks[key].output = "";
 
-		var match;
+    var match;
     if (data.command.substring(0, 1) == '/') {
       if (data.command == '/help') {
         commandBlocks[key].output = searge_says[Math.floor(Math.random() * searge_says.length)];
