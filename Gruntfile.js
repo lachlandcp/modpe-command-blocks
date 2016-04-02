@@ -1,6 +1,8 @@
 const path = require('path');
 
 module.exports = function(grunt) {
+	const pkg = grunt.file.readJSON('package.json');
+  const ftp = grunt.file.readJSON('.ftppass');
 
   // Project configuration.
   grunt.initConfig({
@@ -8,9 +10,9 @@ module.exports = function(grunt) {
     'ftp-deploy': {
       build: {
         auth: {
-          host: process.env.FTP_PHONE_IP,
-          port: process.env.FTP_PHONE_PORT,
-          authKey: 'key'
+				host: ftp['key'].ip,
+   		 	port: ftp['key'].port,
+			authKey: 'key'
         },
         src: 'build',
         dest: '/_modpe_scripts'

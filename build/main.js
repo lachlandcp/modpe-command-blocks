@@ -2,40 +2,43 @@
 var Data = {};
 
 Data.save = function (file, content) {
-	var path = new android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftworlds/" + Level.getWorldDir() + '/modData/commandBlocks/';
-	try {
-		file = file + '.json';
-		var data = new java.io.File(path + file);
-		if (data.exists()) data.delete();
-		data.createNewFile();
-		var outWrite = new java.io.OutputStreamWriter(new java.io.FileOutputStream(data));
-		outWrite.append(JSON.stringify(content || {}));
-		outWrite.close();
-		return Data.read(file);
-	} catch (err) {
-		print(err);
-	}
+  var path = new android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftworlds/" + Level.getWorldDir() + '/modData/commandBlocks/';
+  try {
+    file = file + '.json';
+    var data = new java.io.File(path + file);
+    if (data.exists()) data.delete();
+    data.createNewFile();
+    var outWrite = new java.io.OutputStreamWriter(new java.io.FileOutputStream(data), 'UTF-8');
+    outWrite.append(JSON.stringify(content || {}));
+    outWrite.close();
+    return Data.read(file);
+  } catch (err) {
+    print(err);
+  }
 };
 
 Data.read = function (file) {
-	var path = new android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftworlds/" + Level.getWorldDir() + '/modData/commandBlocks/';
-	file = file + '.json';
-	java.io.File(new java.io.File(path)).mkdirs();
-	var data = new java.io.File(path + file);
-	if (!data.exists()) {
-		return {};
-	}
-	try {
-		var fos = new java.io.FileInputStream(data);
-		var str = new java.lang.StringBuilder();
-		var ch;
-		while ((ch = fos.read()) != -1) str.append(java.lang.Character(ch));
-		var result = JSON.parse(String(str.toString()));
-		fos.close();
-	} catch (err) {
-		result = {};
-	}
-	return result;
+  var path = new android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftworlds/" + Level.getWorldDir() + '/modData/commandBlocks/';
+  var result;
+  try {
+    file = file + '.json';
+    java.io.File(new java.io.File(path)).mkdirs();
+    var data = new java.io.File(path + file);
+    if (!data.exists()) {
+      return {};
+    }
+    var fos = new java.io.FileInputStream(data);
+    var str = new java.lang.StringBuilder();
+    var ch;
+    while ((ch = fos.read()) != -1) {
+      str.append(java.lang.Character(ch));
+    }
+    result = JSON.parse(String(str.toString()));
+    fos.close();
+  } catch (err) {
+    result = {};
+  }
+  return result;
 };
 
 module.exports = Data;
@@ -52,8 +55,8 @@ var global = function () {
 module.exports = global;
 
 },{}],3:[function(require,module,exports){
-var globe = require('./global.js');
-var Data = require('./data.js');
+const globe = require('./global.js');
+const Data = require('./data.js');
 
 globe.newLevel = newLevel;
 globe.useItem = useItem;
@@ -111,7 +114,7 @@ function useItem(x, y, z, itemId, blockId, side) {
   y = sides[side][1];
   z = sides[side][2];
 
-  if (Level.getTile(x, y, z) != 0) return;
+  if (Level.getTile(x, y, z) !== 0) return;
 
   commandBlocks[key] = {
     x: x,
@@ -159,6 +162,7 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
         eval(data.command.substring(match[0].length));
       } catch (err) {
         print(err);
+        commandBlocks[key].output = err;
       }
     } else if (data.command == "Searge") {
       // 1.9 easter egg

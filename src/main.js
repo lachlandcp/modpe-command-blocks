@@ -1,5 +1,5 @@
-var globe = require('./global.js');
-var Data = require('./data.js');
+const globe = require('./global.js');
+const Data = require('./data.js');
 
 globe.newLevel = newLevel;
 globe.useItem = useItem;
@@ -78,7 +78,7 @@ function useItem(x, y, z, itemId, blockId, side) {
   y = sides[side][1];
   z = sides[side][2];
 
-  if (Level.getTile(x, y, z) != 0) return;
+  if (Level.getTile(x, y, z) !== 0) return;
 
   commandBlocks[key] = {
     x: x,
@@ -126,6 +126,7 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
         eval(data.command.substring(match[0].length));
       } catch (err) {
         print(err);
+		    commandBlocks[key].output = err;
       }
     } else if (data.command == "Searge") { // 1.9 easter egg
       commandBlocks[key].output = "#itzlipofutzli";
