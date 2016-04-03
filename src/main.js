@@ -126,13 +126,13 @@ function redstoneUpdateHook(x, y, z, newCurrent, worldLoading, blockId, blockDam
         eval(data.command.substring(match[0].length));
       } catch (err) {
         print(err);
-		    commandBlocks[key].output = err;
+        commandBlocks[key].output = err;
       }
     } else if (data.command == "Searge") { // 1.9 easter egg
       commandBlocks[key].output = "#itzlipofutzli";
     } else {
-			commandBlocks[key].output = "No command or JS provided.";
-		}
+      commandBlocks[key].output = "No command or JS provided.";
+    }
   }
 }
 
