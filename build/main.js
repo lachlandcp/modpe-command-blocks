@@ -1,4 +1,13 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*
+ *	From https://github.com/sliceofcode/flytest/commit/bfa21eaf88cdb223030661f6e11640bb3fc3af9f
+ */
+
+var global = Function('return this')() || (42, eval)('this'); // jshint ignore:line
+
+module.exports = global;
+
+},{}],2:[function(require,module,exports){
 var Data = {};
 
 Data.save = function (file, content) {
@@ -43,19 +52,8 @@ Data.read = function (file) {
 
 module.exports = Data;
 
-},{}],2:[function(require,module,exports){
-/*
- *	From https://github.com/sliceofcode/OreDirectory/blob/master/src/core/global.coffee
- */
-
-var global = function () {
-  return this;
-}.call(null);
-
-module.exports = global;
-
 },{}],3:[function(require,module,exports){
-const globe = require('./global.js');
+const globe = require('modpe-globe');
 const Data = require('./data.js');
 
 globe.newLevel = newLevel;
@@ -241,4 +239,4 @@ function editCommandBlock(x, y, z) {
   }));
 }
 
-},{"./data.js":1,"./global.js":2}]},{},[3]);
+},{"./data.js":2,"modpe-globe":1}]},{},[3]);

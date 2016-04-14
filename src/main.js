@@ -1,4 +1,4 @@
-const globe = require('./global.js');
+const globe = require('modpe-globe');
 const Data = require('./data.js');
 
 globe.newLevel = newLevel;
