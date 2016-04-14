@@ -12,15 +12,15 @@ This mod also features [Minecraft 1.9's command block easter eggs](http://minecr
 
 Using Javascript is great, as you don't need to rely on having other mods installed, however you do need some knowledge of the ModPE functions. You can refer to the ModPE API [here](http://imnofox.github.io/zxc/).
 
-## Toggle mode
-
-If the command block has toggle mode enabled, it will run when it gets powered but also when it gets unpowered.
-
 ### Take screenshot (save name as current time)
 
 ```
 javascript: var d = new Date(); ModPE.takeScreenshot(d.now());
 ```
+
+## Toggle mode
+
+If the command block has toggle mode enabled, it will run when it gets powered but also when it gets unpowered.
 
 # Sharing
 
