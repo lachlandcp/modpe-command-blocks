@@ -33,6 +33,14 @@ Block.setRedstoneConsumer(command_block_id, true);
 Player.addItemCreativeInv(command_block_id, 1, 0);
 Item.setCategory(command_block_id, ItemCategory.TOOL);
 
+function rString(str) {
+  return decodeURI(str);
+}
+
+function sString(str) {
+  return encodeURI(str);
+}
+
 function newLevel() {
   commandBlocks = Data.read(config_filename);
 }

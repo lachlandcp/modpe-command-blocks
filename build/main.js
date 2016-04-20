@@ -42,7 +42,12 @@ Data.read = function (file) {
     while ((ch = fos.read()) != -1) {
       str.append(java.lang.Character(ch));
     }
-    result = JSON.parse(decodeURI(String(str.toString())));
+    var content = String(str.toString());
+    try {
+      result = JSON.parse(content);
+    } catch (err) {
+      result = JSON.parse(decodeURI(content));
+    }
     fos.close();
   } catch (err) {
     result = {};
@@ -72,6 +77,14 @@ Block.defineBlock(command_block_id, "Command Block", [['command_block', 0]], 7, 
 Block.setRedstoneConsumer(command_block_id, true);
 Player.addItemCreativeInv(command_block_id, 1, 0);
 Item.setCategory(command_block_id, ItemCategory.TOOL);
+
+function rString(str) {
+  return decodeURI(str);
+}
+
+function sString(str) {
+  return encodeURI(str);
+}
 
 function newLevel() {
   commandBlocks = Data.read(config_filename);
