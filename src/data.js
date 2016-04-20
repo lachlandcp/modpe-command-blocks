@@ -32,7 +32,12 @@ Data.read = function(file) {
     while ((ch = fos.read()) != -1) {
       str.append(java.lang.Character(ch));
     }
-    result = JSON.parse(decodeURI(String(str.toString())));
+    var content = String(str.toString());
+    try {
+      result = JSON.parse(content);
+    } catch (err) {
+      result = JSON.parse(decodeURI(content));
+    }
     fos.close();
   } catch (err) {
     result = {};
