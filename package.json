@@ -1,6 +1,6 @@
 {
   "name": "commandblocks",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Implements command blocks to MCPE",
   "author": "imnofox <lachlan@imnofox.com>",
   "dependencies": {
