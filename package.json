@@ -16,5 +16,31 @@
     "grunt-cson": "^0.16.0",
     "grunt-ftp-deploy": "^0.1.10",
     "grunt-zip": "^0.17.1"
+  },
+  "jshintConfig": {
+    "esversion": 6,
+    "globals": [
+      "ModPE",
+      "Level",
+      "Player",
+      "Entity",
+      "Item",
+      "Block",
+      "Server",
+      "ChatColor",
+      "ItemCategory",
+      "ParticleType",
+      "EntityType",
+      "EntityRenderType",
+      "ArmorType",
+      "MobEffect",
+      "DimensionId",
+      "BlockFace",
+      "Enchantment",
+      "Sounds",
+      "UseAnimation",
+      "EnchantType",
+      "BlockRenderLayer"
+    ]
   }
 }
